@@ -5,109 +5,148 @@
 </div>
 
 <!-- Hero Start -->
-<section class="bg-auth-home bg-circle-gradiant d-table w-100">
-  <div class="bg-overlay bg-overlay-white"></div>
-  <div class="container">
+<section class="d-flex task-management-home"
+         style="background: url('assets/images/bg_2.png') center ; height: 100vh; width:auto; background-size:cover;"  id="home">
+  <div class="container" style="margin-top:30vh" id="first">
+    <div class="row justify-content-center ">
+      <div class="col-12 text-center ">
+        <div class="section-title mb-4 pb-2 ">
+          <h4 class="title mb-4">Uzupełnij o sobie podstawowe informacje</h4>
+          <p class="text-muted para-desc mb-0 mx-auto">Informacje te będą wyświetlane po wpisaniu na stronie twojego kodu w sekcji "Znajdź pacjenta"</p>
+        </div>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+
+    <div class="row">
+      <div class="col-lg-3 col-md-4 mt-4 pt-2">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-0" (click)="contact()" style="display:block;" id="first_contact">
+          <span class="h1 icon2 text-primary" >
+            <i class="uil uil-user"></i>
+          </span>
+          <div class="card-body p-0 content">
+            <h5>Osoby kontaktowe</h5>
+            <p class="para text-muted mb-0">It is a long established fact that a reader.</p>
+          </div>
+          <span class="big-icon text-center" >
+            <i class="uil uil-user"></i>
+          </span>
+        </div>
+        <!--end col-->
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0" style="display:none; height:16vh;" id="complete_contact">
+          <span class="big-icon" >
+            <i class="uil uil-check" style="color: black;"></i>
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="col-lg-3 col-md-4 mt-4 pt-2">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-0">
+          <span class="h1 icon2 text-primary">
+            <i class="uil uil-medical-square"></i>
+          </span>
+          <div class="card-body p-0 content">
+            <h5>Alergie/uczulenia</h5>
+            <p class="para text-muted mb-0">It is a long established fact that a reader.</p>
+          </div>
+          <span class="big-icon text-center">
+            <i class="uil uil-medical-square"></i>
+          </span>
+        </div>
+      </div>
+      <!--end col-->
+
+      <div class="col-lg-3 col-md-4 mt-4 pt-2">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-0">
+          <span class="h1 icon2 text-primary">
+            <i class="uil uil-capsule"></i>
+          </span>
+          <div class="card-body p-0 content">
+            <h5>Przyjmowane leki</h5>
+            <p class="para text-muted mb-0">It is a long established fact that a reader.</p>
+          </div>
+          <span class="big-icon text-center">
+            <i class="uil uil-capsule"></i>
+          </span>
+        </div>
+      </div>
+      <!--end col-->
+
+      <div class="col-lg-3 col-md-4 mt-4 pt-2">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-0">
+          <span class="h1 icon2 text-primary">
+            <i class="uil uil-heartbeat"></i>
+          </span>
+          <div class="card-body p-0 content">
+            <h5>Choroby przewlekłe</h5>
+            <p class="para text-muted mb-0">It is a long established fact that a reader.</p>
+          </div>
+          <span class="big-icon text-center">
+            <i class="uil uil-heartbeat"></i>
+          </span>
+        </div>
+      </div>
+      <!--end col-->
+
+      <div class="col-lg-12 text-center col-md-4 mt-4 pt-2">
+        <a href="javascript:void(0)" class="btn btn-primary">Gotowe
+          <i-feather name="arrow-right" class="fea icon-sm"></i-feather>
+        </a>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <div id="myDropdown" class="container w-25" style="display:none; margin-top:30vh">
     <div class="row justify-content-center">
-      <div class="col-lg-5 col-md-8">
-        <div class="card shadow rounded border-0 mt-4">
+      <div class="col-12">
+        <div class="card login-page bg-white shadow rounded border-0">
           <div class="card-body">
-            <h4 class="card-title text-center">Signup</h4>
+            <h4 class="card-title text-center">Osoby Kontaktowe</h4>
             <form class="login-form mt-4">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-12">
                   <div class="mb-3">
-                    <label class="form-label">First name <span class="text-danger">*</span></label>
+                    <label class="form-label">Imie i Nazwisko <span class="text-danger">*</span></label>
                     <div class="form-icon position-relative">
-                      <i-feather name="user" class="fea icon-sm icons"></i-feather>
-                      <input type="text" class="form-control ps-5" placeholder="First Name" name="s" required="">
+                      <i-feather name="user" class="fea icon-sm icons d-flex"></i-feather>
+                      <input type="name" class="form-control ps-5 pt-2" placeholder="Imie i Nazwisko" name="name" required="">
                     </div>
                   </div>
                 </div>
                 <!--end col-->
 
-                <div class="col-md-6">
+                <div class="col-lg-12">
                   <div class="mb-3">
-                    <label class="form-label">Last name <span class="text-danger">*</span></label>
+                    <label class="form-label">Telefon kontaktowy<span class="text-danger">*</span></label>
                     <div class="form-icon position-relative">
-                      <i-feather name="user-check" class="fea icon-sm icons"></i-feather>
-                      <input type="text" class="form-control ps-5" placeholder="Last Name" name="s" required="">
+                      <i-feather name="phone" class="fea icon-sm icons d-flex"></i-feather>
+                      <input type="phone" class="form-control ps-5 pt-2" placeholder="Telefon" required="">
                     </div>
                   </div>
                 </div>
                 <!--end col-->
 
-                <div class="col-md-12">
-                  <div class="mb-3">
-                    <label class="form-label">Your Email <span class="text-danger">*</span></label>
-                    <div class="form-icon position-relative">
-                      <i-feather name="mail" class="fea icon-sm icons"></i-feather>
-                      <input type="email" class="form-control ps-5" placeholder="Email" name="email" required="">
-                    </div>
-                  </div>
-                </div>
-                <!--end col-->
-
-                <div class="col-md-12">
-                  <div class="mb-3">
-                    <label class="form-label">Password <span class="text-danger">*</span></label>
-                    <div class="form-icon position-relative">
-                      <i-feather name="key" class="fea icon-sm icons"></i-feather>
-                      <input type="password" class="form-control ps-5" placeholder="Password" required="">
-                    </div>
-                  </div>
-                </div>
-                <!--end col-->
-
-                <div class="col-md-12">
-                  <div class="mb-3">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="form-check-label" for="flexCheckDefault">I Accept <a routerLink="/auth-signup-three"
-                          class="text-primary">Terms And Condition</a></label>
-                    </div>
-                  </div>
-                </div>
-                <!--end col-->
-
-                <div class="col-md-12">
+                <div class="col mb-0">
                   <div class="d-grid">
-                    <button class="btn btn-primary">Register</button>
+                    <button class="btn btn-secondary" (click)="back_to_start()">Pomiń</button>
+                  </div>
+                </div>
+                <div class="col mb-0">
+                  <div class="d-grid">
+                    <button class="btn btn-primary" (click)="back_to_start_complete()">Gotowe</button>
                   </div>
                 </div>
                 <!--end col-->
-
-                <div class="col-lg-12 mt-4 text-center">
-                  <h6>Or Signup With</h6>
-                  <div class="row">
-                    <div class="col-6 mt-3">
-                      <div class="d-grid">
-                        <a href="javascript:void(0)" class="btn btn-light"><i class="mdi mdi-facebook text-primary"></i>
-                          Facebook</a>
-                      </div>
-                    </div>
-                    <!--end col-->
-
-                    <div class="col-6 mt-3">
-                      <div class="d-grid">
-                        <a href="javascript:void(0)" class="btn btn-light"><i class="mdi mdi-google text-danger"></i>
-                          Google</a>
-                      </div>
-                    </div>
-                    <!--end col-->
-                  </div>
-                </div>
-                <!--end col-->
-
-                <div class="mx-auto">
-                  <p class="mb-0 mt-3"><small class="text-dark me-2">Already have an account ?</small> <a
-                      routerLink="/auth-login-three" class="text-dark fw-bold">Sign in</a></p>
-                </div>
               </div>
               <!--end row-->
             </form>
           </div>
         </div>
+        <!---->
       </div>
       <!--end col-->
     </div>
