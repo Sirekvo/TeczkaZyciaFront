@@ -26,10 +26,20 @@ export class AuthSignupThreeComponent implements OnInit {
     document.getElementById('first').style.display = 'none';
     document.getElementById('hidden_2').style.display = 'block';
   }
+  tabs(){
+    document.getElementById('first').style.display = 'none';
+    document.getElementById('hidden_3').style.display = 'block';
+  }
+  illness(){
+    document.getElementById('first').style.display = 'none';
+    document.getElementById('hidden_4').style.display = 'block';
+  }
   back_to_start(){
     document.getElementById('first').style.display = 'block';
     document.getElementById('hidden_1').style.display = 'none';
     document.getElementById('hidden_2').style.display = 'none';
+    document.getElementById('hidden_3').style.display = 'none';
+    document.getElementById('hidden_4').style.display = 'none';
   }
   back_to_start_complete(){
     document.getElementById('first').style.display = 'block';
@@ -42,6 +52,18 @@ export class AuthSignupThreeComponent implements OnInit {
     document.getElementById('hidden_2').style.display = 'none';
     document.getElementById('alergy').style.display = 'none';
     document.getElementById('complete_alergy').style.display = 'block';
+  }
+  back_to_start_complete_3(){
+    document.getElementById('first').style.display = 'block';
+    document.getElementById('hidden_3').style.display = 'none';
+    document.getElementById('tabs').style.display = 'none';
+    document.getElementById('complete_tabs').style.display = 'block';
+  }
+  back_to_start_complete_4(){
+    document.getElementById('first').style.display = 'block';
+    document.getElementById('hidden_4').style.display = 'none';
+    document.getElementById('illness').style.display = 'none';
+    document.getElementById('complete_illness').style.display = 'block';
   }
 
   fill_table() {
@@ -57,9 +79,10 @@ export class AuthSignupThreeComponent implements OnInit {
       document.getElementById('3').innerHTML = (<HTMLInputElement>document.getElementById('phone')).value;
     }
     else if(this.i==2){
+
       document.getElementById('4').innerHTML = "2";
       if ((<HTMLInputElement>document.getElementById('family')).checked) {
-        document.getElementById('5').innerHTML = (<HTMLInputElement>document.getElementById('family')).value;
+        document.getElementById('5').innerHTML =(<HTMLInputElement>document.getElementById('family')).value;
       }
       else if((<HTMLInputElement>document.getElementById('friend')).checked) {
         document.getElementById('5').innerHTML = (<HTMLInputElement>document.getElementById('friend')).value;
