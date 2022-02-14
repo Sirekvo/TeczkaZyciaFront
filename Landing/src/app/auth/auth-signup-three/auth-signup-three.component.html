@@ -33,7 +33,7 @@
             <i class="uil uil-user"></i>
           </span>
         </div>
-        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" style="display:none;" id="complete_contact">
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" (click)="onContactCreate()" style="display:none;" id="complete_contact">
           <span class="" >
             <i class="uil uil-check" style="color: black; font-size:100px;"></i>
           </span>
@@ -112,7 +112,7 @@
     </div>
     <!--end row-->
   </div>
-  <div id="hidden_1" class="container w-85" style="margin-top:10%; display:none;">
+  <div id="hidden_1" class="container w-100- d-grip" style="margin-top:10%; display:none;">
     <div class="row justify-content-center align-items-center col-1 w-100">
       <div class="col-5">
         <div class="bg-white shadow rounded border-0 px-3 py-2">
@@ -145,13 +145,14 @@
                 <div class="col mb-0 text-center w-100">
                   <p class="text-muted para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
                   <div class="col-5 justify-content-center w-100">
-                    <button class="btn btn-success" (click)="fill_table()">Dodaj</button>
+                    <button class="btn btn-success" (click)="onContactCreate(); newCreateTable()">Dodaj</button>
                   </div>
                 </div>
                 <!--edn col-->
                 <div class="p-4">
-                  <div class="table-responsive bg-white shadow rounded">
-                    <table class="table mb-0 table-center">
+                  <div class="table-responsive bg-white shadow rounded" id="contactTable">
+                    <div id="myDiv"></div>
+                    <!-- <table class="table mb-0 table-center">
                       <thead>
                         <tr>
                           <th scope="col" class="border-bottom">#</th>
@@ -176,7 +177,7 @@
                         <td id="9"></td>
                       </tr>
                       </tbody>
-                    </table>
+                    </table> -->
                   </div>
                 </div>
                 <!--end table-->
