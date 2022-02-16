@@ -7,7 +7,7 @@
 <!-- Hero Start -->
 <section class="d-flex task-management-home"
          style="background: url('assets/images/bg_2.png') center ; min-height: 100vh; width:auto; background-size:cover; background-attachment: fixed"  id="home">
-  <div class="container" style="margin-top:10%" id="first">
+  <div class="container" style="margin-top:10%" *ngIf="isVisible_start">
     <div class="row justify-content-center ">
       <div class="col-12 text-center">
         <div class="section-title mb-4 pb-2 ">
@@ -21,7 +21,7 @@
 
     <div class="row justify-content-center w-100">
       <div class="col-lg-3 col-md-5 mt-4 pt-2">
-        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="contact()" style="display:block;" id="first_contact">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="contact()" *ngIf="isVisible_contact">
           <span class="h1 icon2 text-primary">
             <i class="uil uil-user"></i>
           </span>
@@ -33,7 +33,7 @@
             <i class="uil uil-user"></i>
           </span>
         </div>
-        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" style="display:none;" id="complete_contact">
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" *ngIf="isVisible_complete_contact">
           <span class="" >
             <i class="uil uil-check" style="color: black; font-size:100px;"></i>
           </span>
@@ -41,7 +41,7 @@
       </div>
       <!--end col-->
       <div class="col-lg-3 col-md-5 mt-4 pt-2">
-        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="alergy()" style="display:block;" id="alergy">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="alergy()" *ngIf="isVisible_alergy">
           <span class="h1 icon2 text-primary">
             <i class="uil uil-medical-square"></i>
           </span>
@@ -53,7 +53,7 @@
             <i class="uil uil-medical-square"></i>
           </span>
         </div>
-        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" style="display:none;" id="complete_alergy">
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" *ngIf="isVisible_complete_alergy">
           <span class="" >
             <i class="uil uil-check" style="color: black; font-size:100px;"></i>
           </span>
@@ -62,7 +62,7 @@
       <!--end col-->
 
       <div class="col-lg-3 col-md-5 mt-4 pt-2">
-        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="tabs()" style="display:block;" id="tabs">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="tabs()" *ngIf="isVisible_tabs">
           <span class="h1 icon2 text-primary">
             <i class="uil uil-capsule"></i>
           </span>
@@ -74,7 +74,7 @@
             <i class="uil uil-capsule"></i>
           </span>
         </div>
-        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" style="display:none;" id="complete_tabs">
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" *ngIf="isVisible_complete_tabs">
           <span class="" >
             <i class="uil uil-check" style="color: black; font-size:100px;"></i>
           </span>
@@ -83,7 +83,7 @@
       <!--end col-->
 
       <div class="col-lg-3 col-md-5 mt-4 pt-2">
-        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="illness()" style="display:block;" id="illness">
+        <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="illness()" *ngIf="isVisible_illness">
           <span class="h1 icon2 text-primary">
             <i class="uil uil-heartbeat"></i>
           </span>
@@ -95,7 +95,7 @@
             <i class="uil uil-heartbeat"></i>
           </span>
         </div>
-        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" style="display:none;" id="complete_illness">
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" *ngIf="isVisible_complete_illness">
           <span class="" >
             <i class="uil uil-check" style="color: black; font-size:100px;"></i>
           </span>
@@ -112,45 +112,43 @@
     </div>
     <!--end row-->
   </div>
-  <div id="hidden_1" class="container w-100- d-grip" style="margin-top:10%; display:none;">
+  <div *ngIf="isVisible_1" class="container w-100- d-grip" style="margin-top:10%;">
     <div class="row justify-content-center align-items-center col-1 w-100">
       <div class="col-5">
         <div class="bg-white shadow rounded border-0 px-3 py-2">
           <div class="section-title">
-            <h4 class="title text-center">Osoby Kontaktowe</h4>
-            
+            <form id="contactForm" #f="ngForm" (submit)="onContactSubmit(f)">
+              <h4 class="title text-center">Osoby Kontaktowe</h4>
               <div class="row">
-                <form id="contactForm" #f="ngForm" (submit)="onContactSubmit(f)">
-                  <p class="text-secondary text-center para-desc mb-2 mx-auto">Wybierz typ osoby, której podasz numer</p>
-                  <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" >
-                    <label class="btn btn-light active">
-                      <input type="radio" name="type" value=1 autocomplete="off" ngModel required> Rodzina
-                    </label>
-                    <label class="btn btn-light">
-                      <input type="radio" name="type" value=2 autocomplete="off" ngModel required> Znajomy
-                    </label>
-                  </div>
-                  <!--end col-->
-                    
-                  <div class="col-lg-12">
-                    <div class="mb-3 mt-4">
-                      <label class="form-label">Telefon kontaktowy<span class="text-danger">*</span></label>
-                      <div class="form-icon position-relative">
-                        <i-feather name="phone" class="fea icon-sm icons d-flex"></i-feather>
-                        <input type="phone" name="phone" class="form-control ps-5 pt-2" placeholder="Telefon" ngModel required>
-                      </div>
+                <p class="text-secondary text-center para-desc mb-2 mx-auto">Wybierz typ osoby, której podasz numer</p>
+                <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" >
+                  <label class="btn btn-light active">
+                    <input type="radio" name="type" value=1 autocomplete="off" ngModel required> Rodzina
+                  </label>
+                  <label class="btn btn-light">
+                    <input type="radio" name="type" value=2 autocomplete="off" ngModel required> Znajomy
+                  </label>
+                </div>
+                <!--end col-->
+
+                <div class="col-lg-12">
+                  <div class="mb-3 mt-4">
+                    <label class="form-label">Telefon kontaktowy<span class="text-danger">*</span></label>
+                    <div class="form-icon position-relative">
+                      <i-feather name="phone" class="fea icon-sm icons d-flex"></i-feather>
+                      <input type="phone" name="phone" class="form-control ps-5 pt-2" placeholder="Telefon" ngModel required>
                     </div>
                   </div>
-                  <div class="col mb-0 text-center w-100">
-                    <p class="text-secondary para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
-                    <div class="col-5 justify-content-center w-100">
-                      <button type="submit" name="push" class="btn btn-success" [disabled]="!f.valid || contact_counter>2">Dodaj</button>
-                    </div>
+                </div>
+                <div class="col-12 mb-0 pb-4 text-center w-100">
+                  <p class="text-secondary para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
+                  <div class="col-5 justify-content-center w-100">
+                    <button type="submit" name="push" class="btn btn-success" [disabled]="!f.valid || contact_counter>2">Dodaj</button>
                   </div>
-                </form>
+                </div>
                 <!--end col-->
                 
-                <div class="p-4">
+                <div name="table" class="p-4" *ngIf="isVisible">
                   <div class="table-responsive bg-white shadow rounded" id="contactTable">
                     <div id="myDiv"></div>
                     <table class="table mb-0 table-center">
@@ -167,6 +165,7 @@
                           <td *ngIf="(contact.type == 1)">Rodzina </td>
                           <td *ngIf="(contact.type == 2)">Znajomy </td>
                           <td>{{contact.telephone}}</td>
+                          <td><input class="btn btn-danger btn-sm" type="button" value="-" (click)="delete_row_contact(indexOfElement)"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -179,15 +178,15 @@
                     <button class="btn btn-secondary" (click)="back_to_start()">Pomiń</button>
                   </div>
                 </div>
-                <div class="col mb-0 w-100">
+                <div class="col mb-0">
                   <div class="d-grid">
                     <button class="btn btn-primary" (click)="back_to_start_complete()">Gotowe</button>
                   </div>
                 </div>
                 <!--end col-->
-              </div>
+               </div>
               <!--end row-->
-
+            </form>
           </div>
         </div>
         <!---->
@@ -197,7 +196,7 @@
     <!--end row-->
   </div>
   <!--end containter hidden_1-->
-  <div id="hidden_2" class="container w-85" style="margin-top:10%; display:none;">
+  <div *ngIf="isVisible_2" class="container w-85" style="margin-top:10%;">
     <div class="row justify-content-center align-items-center col-1 w-100">
       <div class="col-5">
         <div class="bg-white shadow rounded border-0 px-3 py-2">
@@ -289,7 +288,7 @@
     <!--end row-->
   </div>
   <!--end container hidden_2-->
-  <div id="hidden_3" class="container w-85" style="margin-top:10%; display:none;">
+  <div *ngIf="isVisible_3" class="container w-85" style="margin-top:10%;">
     <div class="row justify-content-center align-items-center col-1 w-100">
       <div class="col-5">
         <div class="bg-white shadow rounded border-0 px-3 py-2">
@@ -381,7 +380,7 @@
     <!--end row-->
   </div>
   <!--end containter hidden_4-->
-  <div id="hidden_4" class="container w-85" style="margin-top:10%; display:none;">
+  <div *ngIf="isVisible_4" class="container w-85" style="margin-top:10%;">
     <div class="row justify-content-center align-items-center col-1 w-100">
       <div class="col-5">
         <div class="bg-white shadow rounded border-0 px-3 py-2">

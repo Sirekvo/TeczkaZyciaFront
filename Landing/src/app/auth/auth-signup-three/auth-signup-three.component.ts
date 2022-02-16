@@ -1,9 +1,9 @@
-//TODO usuwanie, pojawianie sie tabeli po kliknieciu dodaj, zmiana koloru przycisku, responsywnosc, 
-//pojawianie sie i znikanie konkretnych divow
+// TODO  zmiana koloru przycisku, responsywnosc, walidacja
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { stringify } from 'querystring';
 import { NgForm }   from '@angular/forms';
+import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
   selector: 'app-auth-signup-three',
@@ -16,97 +16,104 @@ import { NgForm }   from '@angular/forms';
  */
 
 export class AuthSignupThreeComponent implements OnInit {
-  type: number=0;
+  type = 0;
   telephone: string;
-  click: boolean=false;
+  click = false;
   contactList: Array<Contact> = [];
-  contact_counter=0; 
-  i=0;
+  contact_counter = 0;
+  i = 0;
+  visible = 0;
+  isVisible: boolean = false;
+  isVisible_start: boolean = true;
+  isVisible_1: boolean = false;
+  isVisible_2: boolean = false;
+  isVisible_3: boolean = false;
+  isVisible_4: boolean = false;
+  isVisible_alergy: boolean = true;
+  isVisible_complete_alergy: boolean = false;
+  isVisible_contact: boolean = true;
+  isVisible_complete_contact: boolean = false;
+  isVisible_tabs: boolean = true;
+  isVisible_complete_tabs: boolean = false;
+  isVisible_illness: boolean = true;
+  isVisible_complete_illness: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
-  // tslint:disable-next-line:typedef
+
   contact(){
-    document.getElementById('first').style.display = 'none';
-    document.getElementById('hidden_1').style.display = 'block';
-    // console.log("we cos wypisz");
+    this.isVisible_start = false;
+    this.isVisible_1 = !this.isVisible_1;
   }
   alergy(){
-    document.getElementById('first').style.display = 'none';
-    document.getElementById('hidden_2').style.display = 'block';
+    this.isVisible_start = false;
+    this.isVisible_2 = !this.isVisible_2;
   }
   tabs(){
-    document.getElementById('first').style.display = 'none';
-    document.getElementById('hidden_3').style.display = 'block';
+    this.isVisible_start = false;
+    this.isVisible_3 = !this.isVisible_3;
   }
   illness(){
-    document.getElementById('first').style.display = 'none';
-    document.getElementById('hidden_4').style.display = 'block';
+    this.isVisible_start = false;
+    this.isVisible_4 = !this.isVisible_4;
   }
   back_to_start(){
-    document.getElementById('first').style.display = 'block';
-    document.getElementById('hidden_1').style.display = 'none';
-    document.getElementById('hidden_2').style.display = 'none';
-    document.getElementById('hidden_3').style.display = 'none';
-    document.getElementById('hidden_4').style.display = 'none';
+    this.isVisible_start = true;
+    this.isVisible_1 = false;
+    this.isVisible_2 = false;
+    this.isVisible_3 = false;
+    this.isVisible_4 = false;
   }
   back_to_start_complete(){
-    document.getElementById('first').style.display = 'block';
-    document.getElementById('hidden_1').style.display = 'none';
-    document.getElementById('first_contact').style.display = 'none';
-    document.getElementById('complete_contact').style.display = 'block';
+    this.isVisible_start = true;
+    this.isVisible_1 = false;
+    this.isVisible_contact = false;
+    this.isVisible_complete_contact = true;
   }
   back_to_start_complete_2(){
-    document.getElementById('first').style.display = 'block';
-    document.getElementById('hidden_2').style.display = 'none';
-    document.getElementById('alergy').style.display = 'none';
-    document.getElementById('complete_alergy').style.display = 'block';
+    this.isVisible_start = true;
+    this.isVisible_2 = false;
+    this.isVisible_alergy = false;
+    this.isVisible_complete_alergy = true;
   }
   back_to_start_complete_3(){
-    document.getElementById('first').style.display = 'block';
-    document.getElementById('hidden_3').style.display = 'none';
-    document.getElementById('tabs').style.display = 'none';
-    document.getElementById('complete_tabs').style.display = 'block';
+    this.isVisible_start = true;
+    this.isVisible_3 = false;
+    this.isVisible_tabs = false;
+    this.isVisible_complete_tabs = true;
   }
   back_to_start_complete_4(){
-    document.getElementById('first').style.display = 'block';
-    document.getElementById('hidden_4').style.display = 'none';
-    document.getElementById('illness').style.display = 'none';
-    document.getElementById('complete_illness').style.display = 'block';
+    this.isVisible_start = true;
+    this.isVisible_4 = false;
+    this.isVisible_illness = false;
+    this.isVisible_complete_illness = true;
   }
 
   onContactSubmit(form: any) {
-    if(this.contact_counter <3) {
-      let contact = new Contact();
-      contact.type=form.value.type;
-      contact.telephone=form.value.phone;
+    if (this.contact_counter < 3) {
+      const contact = new Contact();
+      contact.type = form.value.type;
+      contact.telephone = form.value.phone;
       this.contactList.push(contact);
       this.contact_counter++;
-      this.telephone="";
-      console.log("Wartosc z formularza telefon "+ form.value.phone);
-      console.log("Wartosc z formularza typ "+ form.value.type);
-      // this.type=0;
+      if(this.visible==0) {
+        this.isVisible = !this.isVisible;
+        this.visible++;
+      }
     }
-    else if(this.contact_counter >3){
-      form.push.disable();
-    }
-    
   }
-  
-  checkValid(form: any){
-    if(form.value.type!=0 && form.value.phone!=0){
-      this.click=true;
-    }
-    else{
-      this.click=false;
+
+  delete_row_contact(rowNumber: number){
+    this.contactList.splice(rowNumber, 1);
+    this.contact_counter--;
+    if(this.contact_counter == 0){
+      this.visible=0;
+      this.isVisible = false;
     }
   }
 }
 
-function delete_row(): (this: HTMLButtonElement, ev: MouseEvent) => any {
-  throw new Error('dziala.');
-}
 class Contact{
   type: number;
   telephone: string;
