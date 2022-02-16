@@ -33,7 +33,7 @@
             <i class="uil uil-user"></i>
           </span>
         </div>
-        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" (click)="onContactCreate()" style="display:none;" id="complete_contact">
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" style="display:none;" id="complete_contact">
           <span class="" >
             <i class="uil uil-check" style="color: black; font-size:100px;"></i>
           </span>
@@ -118,66 +118,58 @@
         <div class="bg-white shadow rounded border-0 px-3 py-2">
           <div class="section-title">
             <h4 class="title text-center">Osoby Kontaktowe</h4>
-            <form class="mt-4">
+            
               <div class="row">
-                <p class="text-muted text-center para-desc mb-2 mx-auto">Wybierz typ osoby, której podasz numer</p>
-                <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" >
-                  <label class="btn btn-light active">
-                    <input type="radio" value="Rodzina" name="options" id="family" autocomplete="off" checked> Rodzina
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" value="Znajomy" name="options" id="friend" autocomplete="off"> Znajomy
-                  </label>
-                </div>
-                <!--end col-->
-
-                <div class="col-lg-12">
-                  <div class="mb-3 mt-4">
-                    <label class="form-label">Telefon kontaktowy<span class="text-danger">*</span></label>
-                    <div class="form-icon position-relative">
-                      <i-feather name="phone" class="fea icon-sm icons d-flex"></i-feather>
-                      <input type="phone" id="phone" class="form-control ps-5 pt-2" placeholder="Telefon" required="" value="">
+                <form id="contactForm" #f="ngForm" (submit)="onContactSubmit(f)">
+                  <p class="text-secondary text-center para-desc mb-2 mx-auto">Wybierz typ osoby, której podasz numer</p>
+                  <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" >
+                    <label class="btn btn-light active">
+                      <input type="radio" name="type" value=1 autocomplete="off" ngModel required> Rodzina
+                    </label>
+                    <label class="btn btn-light">
+                      <input type="radio" name="type" value=2 autocomplete="off" ngModel required> Znajomy
+                    </label>
+                  </div>
+                  <!--end col-->
+                    
+                  <div class="col-lg-12">
+                    <div class="mb-3 mt-4">
+                      <label class="form-label">Telefon kontaktowy<span class="text-danger">*</span></label>
+                      <div class="form-icon position-relative">
+                        <i-feather name="phone" class="fea icon-sm icons d-flex"></i-feather>
+                        <input type="phone" name="phone" class="form-control ps-5 pt-2" placeholder="Telefon" ngModel required>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <!--end col-->
-
-                <div class="col mb-0 text-center w-100">
-                  <p class="text-muted para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
-                  <div class="col-5 justify-content-center w-100">
-                    <button class="btn btn-success" (click)="onContactCreate(); newCreateTable()">Dodaj</button>
+                  <div class="col mb-0 text-center w-100">
+                    <p class="text-secondary para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
+                    <div class="col-5 justify-content-center w-100">
+                      <button type="submit" name="push" class="btn btn-success" [disabled]="!f.valid || contact_counter>2">Dodaj</button>
+                    </div>
                   </div>
-                </div>
-                <!--edn col-->
+                </form>
+                <!--end col-->
+                
                 <div class="p-4">
                   <div class="table-responsive bg-white shadow rounded" id="contactTable">
                     <div id="myDiv"></div>
-                    <!-- <table class="table mb-0 table-center">
+                    <table class="table mb-0 table-center">
                       <thead>
                         <tr>
-                          <th scope="col" class="border-bottom">#</th>
-                          <th scope="col" class="border-bottom">Kto</th>
-                          <th scope="col" class="border-bottom">Numer telefonu</th>
+                          <th scope="col" class="border-bottom" >#</th>
+                          <th scope="col" class="border-bottom" >Kto</th>
+                          <th scope="col" class="border-bottom" >Numer telefonu</th>
                         </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <th id="1" scope="row"></th>
-                        <td id="2"></td>
-                        <td id="3"></td>
-                      </tr>
-                      <tr>
-                        <th id="4" scope="row"></th>
-                        <td id="5"></td>
-                        <td id="6"></td>
-                      </tr>
-                      <tr>
-                        <th id="7" scope="row"></th>
-                        <td id="8"></td>
-                        <td id="9"></td>
-                      </tr>
+                        <tr *ngFor="let contact of contactList; let indexOfElement=index;">
+                          <td>{{indexOfElement+1}}</td>
+                          <td *ngIf="(contact.type == 1)">Rodzina </td>
+                          <td *ngIf="(contact.type == 2)">Znajomy </td>
+                          <td>{{contact.telephone}}</td>
+                        </tr>
                       </tbody>
-                    </table> -->
+                    </table>
                   </div>
                 </div>
                 <!--end table-->
@@ -195,7 +187,7 @@
                 <!--end col-->
               </div>
               <!--end row-->
-            </form>
+
           </div>
         </div>
         <!---->
@@ -238,7 +230,7 @@
                 <div class="col mb-0 text-center w-100">
                   <p class="text-muted para-desc mb-0">Możesz dodać maksymalnie 3</p>
                   <div class="col-5 justify-content-center w-100">
-                    <button class="btn btn-success" (click)="fill_table()">Dodaj</button>
+                    <button class="btn btn-success" >Dodaj</button>
                   </div>
                 </div>
                 <!--edn col-->
@@ -330,7 +322,7 @@
                 <div class="col mb-0 text-center w-100">
                   <p class="text-muted para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
                   <div class="col-5 justify-content-center w-100">
-                    <button class="btn btn-success" (click)="fill_table()">Dodaj</button>
+                    <button class="btn btn-success" >Dodaj</button>
                   </div>
                 </div>
                 <!--edn col-->
@@ -422,7 +414,7 @@
                 <div class="col mb-0 text-center w-100">
                   <p class="text-muted para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
                   <div class="col-5 justify-content-center w-100">
-                    <button class="btn btn-success" (click)="fill_table()">Dodaj</button>
+                    <button class="btn btn-success" >Dodaj</button>
                   </div>
                 </div>
                 <!--edn col-->

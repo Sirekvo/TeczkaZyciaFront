@@ -1,6 +1,9 @@
+//TODO usuwanie, pojawianie sie tabeli po kliknieciu dodaj, zmiana koloru przycisku, responsywnosc, 
+//pojawianie sie i znikanie konkretnych divow
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { stringify } from 'querystring';
-import { ContactClass } from './contactClass';
+import { NgForm }   from '@angular/forms';
 
 @Component({
   selector: 'app-auth-signup-three',
@@ -13,10 +16,11 @@ import { ContactClass } from './contactClass';
  */
 
 export class AuthSignupThreeComponent implements OnInit {
-  type: number;
+  type: number=0;
   telephone: string;
-  contactList: Array<ContactClass> = [];
-
+  click: boolean=false;
+  contactList: Array<Contact> = [];
+  contact_counter=0; 
   i=0;
   constructor() { }
 
@@ -72,130 +76,39 @@ export class AuthSignupThreeComponent implements OnInit {
     document.getElementById('complete_illness').style.display = 'block';
   }
 
-  fill_table() {
-    this.i++;
-    if(this.i==1){
-      document.getElementById('1').innerHTML = "1";
-      if ((<HTMLInputElement>document.getElementById('family')).checked) {
-        document.getElementById('2').innerHTML = (<HTMLInputElement>document.getElementById('family')).value;
-      }
-      else if((<HTMLInputElement>document.getElementById('friend')).checked) {
-        document.getElementById('2').innerHTML = (<HTMLInputElement>document.getElementById('friend')).value;
-      }
-      document.getElementById('3').innerHTML = (<HTMLInputElement>document.getElementById('phone')).value;
+  onContactSubmit(form: any) {
+    if(this.contact_counter <3) {
+      let contact = new Contact();
+      contact.type=form.value.type;
+      contact.telephone=form.value.phone;
+      this.contactList.push(contact);
+      this.contact_counter++;
+      this.telephone="";
+      console.log("Wartosc z formularza telefon "+ form.value.phone);
+      console.log("Wartosc z formularza typ "+ form.value.type);
+      // this.type=0;
     }
-    else if(this.i==2){
-
-      document.getElementById('4').innerHTML = "2";
-      if ((<HTMLInputElement>document.getElementById('family')).checked) {
-        document.getElementById('5').innerHTML =(<HTMLInputElement>document.getElementById('family')).value;
-      }
-      else if((<HTMLInputElement>document.getElementById('friend')).checked) {
-        document.getElementById('5').innerHTML = (<HTMLInputElement>document.getElementById('friend')).value;
-      }
-      document.getElementById('6').innerHTML = (<HTMLInputElement>document.getElementById('phone')).value;
+    else if(this.contact_counter >3){
+      form.push.disable();
     }
-    else if(this.i==3){
-      document.getElementById('7').innerHTML = "3";
-      if ((<HTMLInputElement>document.getElementById('family')).checked) {
-        document.getElementById('8').innerHTML = (<HTMLInputElement>document.getElementById('family')).value;
-      }
-      else if((<HTMLInputElement>document.getElementById('friend')).checked) {
-        document.getElementById('8').innerHTML = (<HTMLInputElement>document.getElementById('friend')).value;
-      }
-      document.getElementById('9').innerHTML = (<HTMLInputElement>document.getElementById('phone')).value;
-    }
+    
   }
-
-  // delete_row_contact(){
-  //   console.log("Funcka sie uruchomila");
-  //   // this.contactList.splice(index_del, 1);
-  //   // this.newCreateTable();
-  //   // console.log("pelna lista obiektow po usunieciu");
-  //   // for(let j=0;j<this.contactList.length;j++){
-  //   //   console.log("typ elementu "+j+" : " + this.contactList[j].type);
-  //   //   console.log("telefon elementu "+j+" : " + this.contactList[j].telephone);
-  //   // }
-  // }
   
-  delete_row_contact(){
-    console.log("Funkcja sie uruchomila");
-    // this.contactList.splice(index_del, 1);
-    // this.newCreateTable();
-    // console.log("pelna lista obiektow po usunieciu");
-    // for(let j=0;j<this.contactList.length;j++){
-    //   console.log("typ elementu "+j+" : " + this.contactList[j].type);
-    //   console.log("telefon elementu "+j+" : " + this.contactList[j].telephone);
-    // }
-  }
-
-  newCreateTable(){
-    let button_contact:HTMLButtonElement=<HTMLButtonElement>document.createElement("button");
-    button_contact.innerText = "Usun";
-    //button_contact.onclick= () => this.delete_row_contact();
-
-    //button_contact.onclick =delete_row_contact;
-    var mytable = `<table class='table mb-0 table-center' >
-    <thead>
-      <tr>
-        <th scope=col>#</th>
-        <th scope='col'>Kto</th>
-        <th scope='col'>Numer telefonu</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>`;
-    for(let n=0;n<this.contactList.length;n++){
-      var typeInner:string;
-      if(this.contactList[n].type==1){
-        typeInner="Rodzina";
-      }
-      else if(this.contactList[n].type==2){
-        typeInner="Znajomy";
-      }
-        mytable+="<th scope='row'>"+(n+1)+"</th><td>"+typeInner+"</td><td>"+this.contactList[n].telephone+"</td></tr>"
-        // document.scripts[document.scripts.length -1 ].appendChild(button_contact.onclick= delete_row_contact).outerHTML + " </td></tr>";
-   
-          //mytable+="<th scope='row'>"+(n+1)+"</th><td>"+typeInner+"</td><td>"+this.contactList[n].telephone+"</td>" + "<td>" + button_contact.outerHTML + "</td></tr>";
-          
-        //  var button_contact= document.querySelector("#usun_test");
-    
-    
-    // button_contact.addEventListener("click", function(){
-      // console.log("Dziala");
-    // });
+  checkValid(form: any){
+    if(form.value.type!=0 && form.value.phone!=0){
+      this.click=true;
     }
-    mytable+="</tbody></table>";
-    document.getElementById("contactTable").innerHTML = mytable;
-  }
-
-  onContactCreate(){
-    let customObj = new ContactClass();
-    if ((<HTMLInputElement>document.getElementById('family')).checked) {
-      customObj.type=1;
+    else{
+      this.click=false;
     }
-    else if((<HTMLInputElement>document.getElementById('friend')).checked) {
-      customObj.type=2;
-    }
-    // customObj.type=1;
-    customObj.telephone=(<HTMLInputElement>document.getElementById('phone')).value;
-    this.contactList.push(customObj);
-    this.type = 0;
-    this.telephone="";
-    console.log("pelna lista obiektow");
-    for(let j=0;j<this.contactList.length;j++){
-      console.log("typ elementu "+j+" : " + this.contactList[j].type);
-      console.log("telefon elementu "+j+" : " + this.contactList[j].telephone);
-      this.delete_row_contact();
-    }
-    // console.log("typ: " + customObj.type );
-    // console.log("numer: " + customObj.telephone );
-    // console.log("cos sie wyswielta");
   }
 }
 
-
 function delete_row(): (this: HTMLButtonElement, ev: MouseEvent) => any {
   throw new Error('dziala.');
+}
+class Contact{
+  type: number;
+  telephone: string;
 }
 
