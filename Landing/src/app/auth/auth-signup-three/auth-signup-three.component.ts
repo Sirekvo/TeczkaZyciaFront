@@ -23,20 +23,20 @@ export class AuthSignupThreeComponent implements OnInit {
   contact_counter = 0;
   i = 0;
   visible = 0;
-  isVisible: boolean = false;
-  isVisible_start: boolean = true;
-  isVisible_1: boolean = false;
-  isVisible_2: boolean = false;
-  isVisible_3: boolean = false;
-  isVisible_4: boolean = false;
-  isVisible_alergy: boolean = true;
-  isVisible_complete_alergy: boolean = false;
-  isVisible_contact: boolean = true;
-  isVisible_complete_contact: boolean = false;
-  isVisible_tabs: boolean = true;
-  isVisible_complete_tabs: boolean = false;
-  isVisible_illness: boolean = true;
-  isVisible_complete_illness: boolean = false;
+  isVisible = false;
+  isVisible_start = true;
+  isVisible_1 = false;
+  isVisible_2 = false;
+  isVisible_3 = false;
+  isVisible_4 = false;
+  isVisible_alergy = true;
+  isVisible_complete_alergy = false;
+  isVisible_contact = true;
+  isVisible_complete_contact = false;
+  isVisible_tabs = true;
+  isVisible_complete_tabs = false;
+  isVisible_illness = true;
+  isVisible_complete_illness = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -97,7 +97,7 @@ export class AuthSignupThreeComponent implements OnInit {
       contact.telephone = form.value.phone;
       this.contactList.push(contact);
       this.contact_counter++;
-      if(this.visible==0) {
+      if (this.visible == 0) {
         this.isVisible = !this.isVisible;
         this.visible++;
       }
@@ -107,8 +107,8 @@ export class AuthSignupThreeComponent implements OnInit {
   delete_row_contact(rowNumber: number){
     this.contactList.splice(rowNumber, 1);
     this.contact_counter--;
-    if(this.contact_counter == 0){
-      this.visible=0;
+    if (this.contact_counter == 0){
+      this.visible = 0;
       this.isVisible = false;
     }
   }
