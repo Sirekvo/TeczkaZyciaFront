@@ -189,6 +189,9 @@ import { PortfolioDetailTwoComponent } from './core/components/portfolio-detail-
 import { PortfolioDetailThreeComponent } from './core/components/portfolio-detail-three/portfolio-detail-three.component';
 import { PortfolioDetailFourComponent } from './core/components/portfolio-detail-four/portfolio-detail-four.component';
 
+//custom import
+import { AlergyPipe} from "./auth/auth-signup-three/alergy.pipe";
+
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   slidesPerView: 'auto'
@@ -196,6 +199,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
 @NgModule({
   declarations: [
+      // custom
+      AlergyPipe,
     AppComponent,
     HeaderComponent,
     FooterComponent,

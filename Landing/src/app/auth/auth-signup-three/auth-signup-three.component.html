@@ -5,8 +5,8 @@
 </div>
 
 <!-- Hero Start -->
-<section class="d-flex task-management-home"
-         style="background: url('assets/images/bg_2.png') center ; min-height: 100vh; width:auto; background-size:cover; background-attachment: fixed"  id="home">
+<section class="d-flex task-management-home "
+         style="background: url('assets/images/bg_v2.png') center center ; min-height: 100vh; width:auto; background-size:cover;" id="home">
   <div class="container" style="margin-top:10%" *ngIf="isVisible_start">
     <div class="row justify-content-center ">
       <div class="col-12 text-center">
@@ -19,7 +19,7 @@
     </div>
     <!--end row-->
 
-    <div class="row justify-content-center w-100">
+    <div class="row justify-content-center">
       <div class="col-lg-3 col-md-5 mt-4 pt-2">
         <div class="card features fea-primary rounded p-4 bg-light text-center position-relative overflow-hidden border-1 h-100" (click)="contact()" *ngIf="isVisible_contact">
           <span class="h1 icon2 text-primary">
@@ -33,7 +33,7 @@
             <i class="uil uil-user"></i>
           </span>
         </div>
-        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" *ngIf="isVisible_complete_contact">
+        <div class="card features fea-primary rounded p-4 bg-success text-center position-relative overflow-hidden border-0 h-100" (click)="contact()" *ngIf="isVisible_complete_contact">
           <span class="" >
             <i class="uil uil-check" style="color: black; font-size:100px;"></i>
           </span>
@@ -113,19 +113,19 @@
     <!--end row-->
   </div>
   <div *ngIf="isVisible_1" class="container" style="margin-top:10%;">
-    <div class="row justify-content-center align-items-center w-100">
-      <div class="col-lg-5 col-md-6">
-        <div class="bg-light shadow rounded border-1 px-3 py-2">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-5 col-md-5">
+        <div class="card rounded bg-light overflow-hidden border-1 px-3 py-4">
           <form id="contactForm" #f="ngForm" (submit)="onContactSubmit(f)">
             <h4 class="title text-center">Osoby Kontaktowe</h4>
             <div class="row">
               <p class="text-secondary text-center para-desc mb-2 mx-auto">Wybierz typ osoby, której podasz numer</p>
               <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" >
-                <label class="btn btn-light active">
-                  <input type="radio" name="type" value=1 autocomplete="off" ngModel required> Rodzina
+                <label class="btn btn-light" [ngClass]="{'active': activeToggle==1}">
+                  <input type="radio" name="type" value=1 autocomplete="off" ngModel required (click)="checkSelected(1)"> Rodzina
                 </label>
-                <label class="btn btn-light">
-                  <input type="radio" name="type" value=2 autocomplete="off" ngModel required> Znajomy
+                <label class="btn btn-light" [ngClass]="{'active': activeToggle==2}">
+                  <input type="radio" name="type" value=2 autocomplete="off" ngModel required (click)=checkSelected(2)> Znajomy
                 </label>
               </div>
               <!--end col-->
@@ -135,27 +135,28 @@
                   <label class="form-label">Telefon kontaktowy<span class="text-danger">*</span></label>
                   <div class="form-icon position-relative">
                     <i-feather name="phone" class="fea icon-sm icons d-flex"></i-feather>
-                    <input type="phone" name="phone" class="form-control ps-5 pt-2" placeholder="Telefon" ngModel required minlength="9" maxlength="9">
+                    <input type="number" name="phone" class="form-control ps-5 pt-2" placeholder="Telefon" ngModel required pattern=".{9,9}">
                   </div>
                 </div>
               </div>
               <div class="col-12 mb-0 pb-4 text-center w-100">
                 <p class="text-secondary para-desc mb-0">Możesz dodać maksymalnie 3 osoby</p>
                 <div class="col-5 justify-content-center w-100">
-                  <button type="submit" name="push" class="btn btn-success"  [disabled]="!f.valid || contact_counter>2">Dodaj</button>
+                  <button type="submit" name="push" class="btn btn-success" [disabled]="!f.valid || contact_counter>2">Dodaj</button>
                 </div>
               </div>
               <!--end col-->
 
-              <div name="table" class="p-4" *ngIf="isVisible">
+              <div name="table" class="p-4" *ngIf="isVisible_table_contact">
                 <div class="table-responsive bg-white shadow rounded" id="contactTable">
-                  <div id="myDiv"></div>
+                  <div></div>
                   <table class=" table mb-0 table-center">
                     <thead>
                       <tr>
                         <th scope="col" class="border-bottom" >#</th>
                         <th scope="col" class="border-bottom" >Kto</th>
                         <th scope="col" class="border-bottom" >Numer telefonu</th>
+                        <th scope="col" class="border-bottom" ></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -186,7 +187,6 @@
              </div>
             <!--end row-->
           </form>
-
         </div>
         <!---->
       </div>
@@ -195,90 +195,81 @@
     <!--end row-->
   </div>
   <!--end containter hidden_1-->
-  <div *ngIf="isVisible_2" class="container w-85" style="margin-top:10%;">
-    <div class="row justify-content-center align-items-center col-1 w-100">
-      <div class="col-5">
-        <div class="bg-white shadow rounded border-0 px-3 py-2">
-          <div class="section-title">
-            <h4 class="title text-center">Alergie / Uczulenia</h4>
-            <form class="mt-4">
-              <div class="row">
-                <p class="text-muted text-center para-desc mb-2 mx-auto">Podaj swoje uczulenia oraz alergie</p>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons" >
-                  <label class="btn btn-light active">
-                    <input type="radio" value="Alergia" name="options" id="alergy_input" autocomplete="off" checked> Alergia
-                  </label>
-                  <label class="btn btn-light">
-                    <input type="radio" value="Uczulenie" name="options" id="alergy_input_2" autocomplete="off"> Uczulenie
-                  </label>
-                </div>
-                <!--end col-->
-
-                <div class="col-lg-12">
-                  <div class="mb-3 mt-4">
-                    <label class="form-label">Na co?<span class="text-danger">*</span></label>
-                    <div class="form-icon position-relative">
-                      <i-feather name="phone" class="fea icon-sm icons d-flex"></i-feather>
-                      <input type="for" id="for" class="form-control ps-5 pt-2" placeholder="Na co?" required="" value="">
-                    </div>
-                  </div>
-                </div>
-                <!--end col-->
-
-                <div class="col mb-0 text-center w-100">
-                  <p class="text-muted para-desc mb-0">Możesz dodać maksymalnie 3</p>
-                  <div class="col-5 justify-content-center w-100">
-                    <button class="btn btn-success" >Dodaj</button>
-                  </div>
-                </div>
-                <!--edn col-->
-                <div class="p-4">
-                  <div class="table-responsive bg-white shadow rounded">
-                    <table class="table mb-0 table-center">
-                      <thead>
-                      <tr>
-                        <th scope="col" class="border-bottom">#</th>
-                        <th scope="col" class="border-bottom">Kto</th>
-                        <th scope="col" class="border-bottom">Numer telefonu</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr>
-                        <th id="1" scope="row"></th>
-                        <td id="2"></td>
-                        <td id="3"></td>
-                      </tr>
-                      <tr>
-                        <th id="4" scope="row" type="number"></th>
-                        <td id="5"></td>
-                        <td id="6"></td>
-                      </tr>
-                      <tr>
-                        <th id="7" scope="row"></th>
-                        <td id="8"></td>
-                        <td id="9"></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <!--end table-->
-
-                <div class="col mb-0">
-                  <div class="d-grid">
-                    <button class="btn btn-secondary" (click)="back_to_start()">Pomiń</button>
-                  </div>
-                </div>
-                <div class="col mb-0 w-100">
-                  <div class="d-grid">
-                    <button class="btn btn-primary" (click)="back_to_start_complete_2()">Gotowe</button>
-                  </div>
-                </div>
-                <!--end col-->
+  <div *ngIf="isVisible_2" class="container" style="margin-top:10%;">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-5 col-md-5">
+        <div class="card rounded bg-light overflow-hidden border-1 px-3 py-4">
+          <form id="alergyForm" #fa="ngForm" (submit)="onAlergySubmit(fa)">
+            <h4 class="title text-center">Alergie i Uczulenia</h4>
+            <div class="row">
+              <p class="text-secondary text-center para-desc mb-2 mx-auto">Wybierz typ osoby, której podasz numer</p>
+              <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" >
+                <label class="btn btn-light" [ngClass]="{'active': activeToggle==1}">
+                  <input type="radio" name="type2" value="1" autocomplete="off" ngModel required (click)="checkSelected(1)"> Alergia
+                </label>
+                <label class="btn btn-light" [ngClass]="{'active': activeToggle==2}">
+                  <input type="radio" name="type2" value="2" autocomplete="off" ngModel required (click)=checkSelected(2)> Uczulenie
+                </label>
               </div>
-              <!--end row-->
-            </form>
-          </div>
+              <!--end col-->
+
+              <div class="col-lg-12">
+                <div class="mb-3 mt-4">
+                  <label class="form-label">Nazwa<span class="text-danger">*</span></label>
+                  <div class="form-icon position-relative">
+                    <i-feather name="edit-2" class="fea icon-sm icons d-flex"></i-feather>
+                    <input type="text" name="name" class="form-control ps-5 pt-2" placeholder="Nazwa" ngModel required minlength="3">
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mb-0 pb-4 text-center w-100">
+                <p class="text-secondary para-desc mb-0">Możesz dodać maksymalnie 15 uczuleń/alergii</p>
+                <div class="col-5 justify-content-center w-100">
+                  <button type="submit" name="push" class="btn btn-success"  [disabled]="!fa.valid || alergy_counter>14">Dodaj</button>
+                </div>
+              </div>
+              <!--end col-->
+
+              <div name="table" class="p-4" *ngIf="isVisible_table_alergy">
+                <div class="table-responsive bg-white shadow rounded" id="alergyTable">
+                  <div></div>
+                  <table class=" table mb-0 table-center">
+                    <thead>
+                    <tr>
+                      <th scope="col" class="border-bottom" >#</th>
+                      <th scope="col" class="border-bottom" >Typ</th>
+                      <th scope="col" class="border-bottom" >Nazwa</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let alergy of alergyList | alergyFilter:1:'type' ; let indexOfElement=index;">
+                      <td>{{indexOfElement+1}}</td>
+                      <td *ngIf="(alergy.type == 1)">Alergia </td>
+                      <td *ngIf="(alergy.type == 2)">Uczulenie </td>
+                      <td>{{alergy.name}}</td>
+                      <td><input class="btn btn-danger btn-sm align-items-center" type="button" value="-" (click)="delete_row_alergy(indexOfElement)"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--end table-->
+
+              <div class="col mb-0">
+                <div class="d-grid">
+                  <button class="btn btn-secondary" (click)="back_to_start()">Pomiń</button>
+                </div>
+              </div>
+              <div class="col mb-0">
+                <div class="d-grid">
+                  <button class="btn btn-primary" (click)="back_to_start_complete()">Gotowe</button>
+                </div>
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </form>
+
         </div>
         <!---->
       </div>
@@ -298,10 +289,10 @@
                 <p class="text-muted text-center para-desc mb-2 mx-auto">Wybierz typ osoby, której podasz numer</p>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons" >
                   <label class="btn btn-light active">
-                    <input type="radio" value="Rodzina" name="options" id="family" autocomplete="off" checked> Rodzina
+                    <input type="radio" value="Rodzina" name="options" autocomplete="off" checked> Rodzina
                   </label>
                   <label class="btn btn-light">
-                    <input type="radio" value="Znajomy" name="options" id="friend" autocomplete="off"> Znajomy
+                    <input type="radio" value="Znajomy" name="options" autocomplete="off"> Znajomy
                   </label>
                 </div>
                 <!--end col-->
