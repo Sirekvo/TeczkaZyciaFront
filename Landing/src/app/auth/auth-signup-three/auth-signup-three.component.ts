@@ -1,7 +1,6 @@
-// TODO  zmiana koloru przycisku
+// TODO  opisy, background,
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { stringify } from 'querystring';
 import { NgForm } from '@angular/forms';
 import {ChangeDetectorRef} from '@angular/core';
 
@@ -19,13 +18,20 @@ export class AuthSignupThreeComponent implements OnInit {
   activeToggle = 0;
   click = false;
   contactList: Array<Contact> = [];
-  alergyList: Array<Alergy> = [];
+  allergyList: Array<Allergy> = [];
+  illnessList: Array<Illness> = [];
+  tabsList: Array<Tabs> = [];
   contact_counter = 0;
-  alergy_counter = 0;
+  allergy_counter = 0;
+  illness_counter = 0;
+  tabs_counter = 0;
   i = 0;
   visible = 0;
   isVisible_table_contact = false;
   isVisible_table_alergy = false;
+  isVisible_table_illness = false;
+  isVisible_table_tabs = false;
+  isVisible_others = false;
   isVisible_start = true;
   isVisible_1 = false;
   isVisible_2 = false;
@@ -39,6 +45,11 @@ export class AuthSignupThreeComponent implements OnInit {
   isVisible_complete_tabs = false;
   isVisible_illness = true;
   isVisible_complete_illness = false;
+  how_often: Array<string> = ['Raz na dzień', 'Dwa razy na dzień', 'Trzy razy na dzień', 'Cztery razy na dzień', 'Co drugi dzień', 'Co trzeci dzień', 'Co tydzień', 'Inne'];
+  howOftenSelect = this.how_often[0];
+  selectedModule : any;
+
+
   constructor() { }
 
   ngOnInit(): void {
@@ -52,6 +63,7 @@ export class AuthSignupThreeComponent implements OnInit {
   alergy(){
     this.isVisible_start = false;
     this.isVisible_2 = !this.isVisible_2;
+    this.activeToggle = 0;
   }
   tabs(){
     this.isVisible_start = false;
@@ -102,6 +114,7 @@ export class AuthSignupThreeComponent implements OnInit {
       contact.telephone = form.value.phone;
       this.contactList.push(contact);
       this.contact_counter++;
+      form.reset();
       if (this.visible == 0) {
         this.isVisible_table_contact = !this.isVisible_table_contact;
         this.visible++;
@@ -117,30 +130,89 @@ export class AuthSignupThreeComponent implements OnInit {
       this.isVisible_table_contact = false;
     }
   }
-  onAlergySubmit(form: any) {
-    if (this.alergy_counter < 15) {
-      const alergy = new Alergy();
-      alergy.type = form.value.type2;
-      alergy.name = form.value.name;
-      this.alergyList.push(alergy);
-      this.alergy_counter++;
+  onAllergySubmit(form: any) {
+    if (this.allergy_counter < 15) {
+      const allergy = new Allergy();
+      allergy.type = form.value.type2;
+      allergy.name = form.value.name;
+      this.allergyList.push(allergy);
+      this.allergy_counter++;
+      form.reset();
       if (this.visible == 0) {
         this.isVisible_table_alergy = !this.isVisible_table_alergy;
         this.visible++;
       }
     }
   }
-  delete_row_alergy(rowNumber: number){
-    this.alergyList.splice(rowNumber, 1);
-    this.alergy_counter--;
-    if (this.alergy_counter == 0){
+  delete_row_allergy(rowNumber: number){
+    this.allergyList.splice(rowNumber, 1);
+    this.allergy_counter--;
+    if (this.allergy_counter == 0){
       this.visible = 0;
       this.isVisible_table_alergy = false;
+    }
+  }
+  onIllnessSubmit(form: any) {
+    if (this.illness_counter < 5) {
+      const illness = new Illness();
+      illness.name = form.value.name;
+      this.illnessList.push(illness);
+      this.illness_counter++;
+      form.reset();
+      if (this.visible == 0) {
+        this.isVisible_table_illness = !this.isVisible_table_illness;
+        this.visible++;
+      }
+    }
+  }
+  delete_row_illness(rowNumber: number){
+    this.illnessList.splice(rowNumber, 1);
+    this.illness_counter--;
+    if (this.illness_counter == 0){
+      this.visible = 0;
+      this.isVisible_table_illness = false;
+    }
+  }
+  onTabsSubmit(form: any) {
+    if (this.tabs_counter < 15) {
+      const tabs = new Tabs();
+      tabs.name = form.value.name;
+      tabs.portion = form.value.portion;
+      tabs.how_often = this.howOftenSelect;
+      if (tabs.how_often == 'Inne'){
+        tabs.how_often = form.value.description;
+      }
+      this.tabsList.push(tabs);
+      this.tabs_counter++;
+      form.reset();
+      if (this.visible == 0) {
+        this.isVisible_table_tabs = !this.isVisible_table_tabs;
+        this.visible++;
+      }
+    }
+  }
+  delete_row_tabs(rowNumber: number){
+    this.tabsList.splice(rowNumber, 1);
+    this.tabs_counter--;
+    if (this.tabs_counter == 0){
+      this.visible = 0;
+      this.isVisible_table_tabs = false;
     }
   }
   checkSelected(selectedChoice: number){
     this.activeToggle = selectedChoice;
   }
+  selectOptionHandler(event: any){
+    if (event.target.value === 'Inne'){
+      this.isVisible_others = true;
+      this.howOftenSelect = event.target.value;
+    }
+    else{
+      this.isVisible_others = false;
+      this.howOftenSelect = event.target.value;
+    }
+  }
+
 }
 
 class Contact{
@@ -148,9 +220,18 @@ class Contact{
   telephone: string;
 }
 
-export class Alergy{
+export class Allergy{
   type: number;
   name: string;
 }
 
+class Tabs{
+  name: string;
+  portion: number;
+  how_often: string;
+}
+
+class Illness{
+  name: string;
+}
 

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform} from '@angular/core';
-import { Alergy } from './auth-signup-three.component';
+import { Allergy } from './auth-signup-three.component';
 import {filter} from "rxjs/operators";
 
 @Pipe({
